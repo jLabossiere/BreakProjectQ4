@@ -29,5 +29,11 @@ namespace BreakProjectWebApp.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<BreakProjectWebApp.Models.Project> Projects { get; set; }
+
+        public System.Data.Entity.DbSet<BreakProjectWebApp.Models.ApplicationUser> ApplicationUsers { get; set; }
+
+        public System.Data.Entity.DbSet<BreakProjectWebApp.Models.ProjectTask> ProjectTasks { get; set; }
     }
 }

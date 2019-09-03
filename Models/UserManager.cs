@@ -9,7 +9,7 @@ namespace BreakProjectWebApp.Models
 {
     public class UserManager
     {
-        ApplicationDbContext db; 
+        ApplicationDbContext db;
         public UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>());
         public UserManager(ApplicationDbContext applicationDbContext)
         {
@@ -21,6 +21,22 @@ namespace BreakProjectWebApp.Models
             return db.Users.Find(id);
         }
 
-        
+        public void AddRole(string id, string role)
+        {
+            var desiredUser = db.Users.FirstOrDefault(x => x.Id == id);
+            if (!userManager.IsInRole(desiredUser.Id, role))
+            {
+                userManager.AddToRole(desiredUser.Id, role);
+            }
+        }
+
+        public void RemoveFromRole(string id, string role)
+        {
+            var desiredUser = db.Users.FirstOrDefault(x => x.Id == id);
+            if (userManager.IsInRole(desiredUser.Id, role))
+            {
+                userManager.RemoveFromRole(desiredUser.Id, role);
+            }
+        }
     }
 }
