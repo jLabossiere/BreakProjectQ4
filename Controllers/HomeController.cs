@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using BreakProjectWebApp.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace BreakProjectWebApp.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         private RoleManager<IdentityRole> rolesManager;
         private UserManager<IdentityUser> usersManager;
         public HomeController()
@@ -21,6 +23,13 @@ namespace BreakProjectWebApp.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult TaskView()
+        {
+            string UserId = User.Identity.GetUserId();
+            var TaskCollection = db.ProjectTasks.Where(x => x.DeveloperId == UserId).ToList();
+            return View(TaskCollection);
         }
 
         public ActionResult About()
